@@ -1,0 +1,31 @@
+#hallMap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.booth-box {
+    width: 120px;
+    height: 100px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.booth-box:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    #map-section, #info-section {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .booth-box {
+        width: 45%;
+    }
+}
