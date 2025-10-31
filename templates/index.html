@@ -106,9 +106,12 @@
       boothContainer.innerHTML = "";
       booths.forEach(b => {
         const tech = (b.technology || "").toLowerCase();
-        let color = "#f8f9fa"; // default
+        let color = "#F7263B"; // default
         if (tech.includes("magento")) color = "#FFD580"; // light orange
         else if (tech.includes("woo")) color = "#E6CCFF"; // light purple
+        else if (tech.includes("shopify")) color = "#C6F6C6";   // light green
+        else if (tech.includes("nop")) color = "#ADD8FF";  // light blue 
+        else if (tech.includes("big")) color = "#f8f9fa";  // light blue  
 
         const div = document.createElement("div");
         div.className = "card booth-card text-center p-2 shadow-sm";
