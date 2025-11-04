@@ -106,17 +106,25 @@
       boothContainer.innerHTML = "";
       booths.forEach(b => {
         const tech = (b.technology || "").toLowerCase();
-        let color = "#F7263B"; // default
-        if (tech.includes("magento")) color = "#FFD580"; // light orange
-        else if (tech.includes("woo")) color = "#E6CCFF"; // light purple
-        else if (tech.includes("shopify")) color = "#C6F6C6";   // light green
-        else if (tech.includes("nop")) color = "#ADD8FF";  // light blue 
-        else if (tech.includes("big")) color = "#f8f9fa";  // light blue  
+        const meetBooth = (b.meetbooth || "").trim().toLowerCase() === "yes";
+
+        // Base background color by technology
+        let bgColor = "#F7263B"; // default red
+        if (tech.includes("magento")) bgColor = "#FFD580"; // light orange
+        else if (tech.includes("woo")) bgColor = "#E6CCFF"; // light purple
+        else if (tech.includes("shopify")) bgColor = "#C6F6C6"; // light green
+        else if (tech.includes("nop")) bgColor = "#ADD8FF";  // light blue 
+        else if (tech.includes("big")) bgColor = "#f8f9fa";  // light grey
+        else if (tech.includes("web")) bgColor = "#9494FA";  // sky blue
+
+        // Apply dual color if meetbooth is Yes
+        const cardStyles = meetBooth
+          ? `background: linear-gradient(135deg, ${bgColor} 50%, #FAF794 50%); border: 2px solid #000;`
+          : `background-color: ${bgColor};`;
 
         const div = document.createElement("div");
         div.className = "card booth-card text-center p-2 shadow-sm";
-        div.style.backgroundColor = color;
-        div.style.width = "140px";
+        div.style = `${cardStyles} width: 140px; cursor: pointer;`;
         div.innerHTML = `
           <strong>${b.booth_number || ""}</strong><br>
           <small>${b.company_name || ""}</small>
@@ -131,6 +139,7 @@
     async function showBooth(boothNumber) {
       const res = await fetch(`/booth/${boothNumber}`);
       const data = await res.json();
+      console.log(data)
 
       if (data.error) {
         boothDetails.innerHTML = data.error;
@@ -166,6 +175,8 @@
         <p><strong>Revenue:</strong> ${data.revenue || ""}</p>
         <h5 class="mt-3">Contacts:</h5>
         ${contactsHTML}
+
+        <p><strong>Contact Person From Our End :</strong> ${data.contactby || ""}</p>
 
         <h5 class="mt-3">📝 General Notes:</h5>
         <textarea class="form-control" id="noteBox" rows="3">${data.notes || ""}</textarea>
